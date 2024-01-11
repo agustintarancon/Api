@@ -30,10 +30,10 @@ const loginUserService = async ({ email, password}) => {
   if (!passwordMatch) throw new Error('Credenciales incorrectas. Por favor, inténtalo de nuevo.');//En caso de que no coincidan devolvemos un error
 
 	//En caso de pasar las comprobaciones anteriores y que todo sea correcto, creamos el token para darle acceso al usuario logueado
-  const payload = {
+  const payload = { //El payload seria el cuerpo de nuestro token
     userFounded,
   }
-  const token = await jwt.sign(payload, secretKey, {
+  const token = await jwt.sign(payload, secretKey, { //Con el metodo sign creamos el token y le asignamos un tiempo para que expire, por lo general 10hs
     expiresIn: '10h'
   });
 
@@ -42,10 +42,8 @@ const loginUserService = async ({ email, password}) => {
 
 //Servicio para obtener todos los usuarios
 const getAllusersService = async () => {
-  const users = await User.find()
-
-  if (!users) throw new Error('No se encontraron usuarios con los filtros seleccionados');
-
+  const users = await User.find() //Usamos el metodo find para buscar en el modelo de usuarios 
+  if (!users) throw new Error('No se encontraron usuarios con los filtros seleccionados');//En caso de no encontrar nada devolvemos un error
   return users;
 }
 
